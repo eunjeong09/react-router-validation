@@ -1,14 +1,16 @@
 import { Route} from "react-router-dom";
 import Forbidden from "./forbidden";
 
+// 역할
 export const ROLE = {
   USER: "USER",
   ADMIN: "ADMIN"
 };
 
-const Validation = ({ role, component: Component, ...rest }) => {
-    console.log(Component);
-    console.log({...rest});
+
+const Validation = ({ role, component: Component, path, ...rest }) => {
+    // App.js 에서 호출시에 받는 role을 console.log를 통해서 확인
+    console.log(typeof(role));
   return (
     <Route
       {...rest}
@@ -16,13 +18,9 @@ const Validation = ({ role, component: Component, ...rest }) => {
       render={props => {
 
         // 현재 role과 컴포넌트가 일치하지 않으면 403출력
-        // if (role === ROLE.USER && path === "/admin") {
-        //   return <Forbidden />;
-        // }
-        // if(role === ROLE.ADMIN && path === "/user"){
-        //     return <Forbidden />;
-        // }
-
+        if(role === undefined){
+            return <Forbidden />;
+        }
 
         // 권한에 맞는 컴포넌트 출력
         if (Component) {
